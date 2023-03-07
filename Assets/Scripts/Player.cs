@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
 
     private int tickSpeed = 10; //1 second
 
-    private int year = 0;
+    private DateTime dateTime = new DateTime();
     
     #endregion
 
