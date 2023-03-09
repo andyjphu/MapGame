@@ -227,7 +227,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 120296, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: m_Name
-      value: RTS_Camera
+      value: PlayerCamera
       objectReference: {fileID: 0}
     - target: {fileID: 459968, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: m_RootOrder
@@ -303,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: screenEdgeMovementSpeed
-      value: 35
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11455738, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
       propertyPath: scrollWheelZoomingSensitivity
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944947337}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -557,7 +557,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -820648088020848222, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
---- !u!114 &944947342
+--- !u!114 &944947344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,9 +566,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 944947337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d52afece34607b84ea45207bbd75b10f, type: 3}
+  m_Script: {fileID: 11500000, guid: f739fca373d3b45ff9e594d76e09200e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  influence: 0
+  diplomaticRecognition: 0
+  directIncome: 0
+  developement: 0
+  owner: not a formal nation
 --- !u!1 &958621396 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 120296, guid: 407bd5cbe8c43334bb1b25c0f3826974, type: 3}
@@ -593,6 +598,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 958621401}
   selected: {fileID: 0}
+  playerColor: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+  startingProvince: {fileID: 0}
+  playerMoney: 0
 --- !u!1 &960147118 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1641059800004466551, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
@@ -716,15 +724,15 @@ PrefabInstance:
     - target: {fileID: -8229714192486028619, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -7616788035064026553, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -7387436486536285727, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -6291094999751554403, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -732,7 +740,7 @@ PrefabInstance:
     - target: {fileID: -6199696995164831811, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -5970780011158970648, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -744,23 +752,23 @@ PrefabInstance:
     - target: {fileID: -5109257667874066498, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -4969506558817801323, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -3792572752319146911, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -2885667693350321590, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -2174023274212151038, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -1139128898749627607, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -776,19 +784,19 @@ PrefabInstance:
     - target: {fileID: -390187898116336935, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 813614935350357984, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 919132149155446097, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Name
-      value: gb
+      value: British Isles
       objectReference: {fileID: 0}
     - target: {fileID: 1154999719735439145, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 1641059800004466551, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -796,11 +804,11 @@ PrefabInstance:
     - target: {fileID: 2492385922294146579, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 2613603812308142591, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 2618059761889072982, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -820,7 +828,7 @@ PrefabInstance:
     - target: {fileID: 3072233844779046496, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 3321583025625194272, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -840,7 +848,7 @@ PrefabInstance:
     - target: {fileID: 6622456186636429139, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 6687077569720015588, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -848,11 +856,11 @@ PrefabInstance:
     - target: {fileID: 6752083146704586480, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 6990939041014269213, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 7679103083932570821, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -860,7 +868,7 @@ PrefabInstance:
     - target: {fileID: 7916502859065476429, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 86de4697cf536e74a9d934024e83b02c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 7928921381863291208, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -883,7 +891,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1109969782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -894,6 +902,23 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &1109969785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109969782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f739fca373d3b45ff9e594d76e09200e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  influence: 0
+  diplomaticRecognition: 0
+  directIncome: 0
+  developement: 0
+  owner: not a formal nation
 --- !u!1 &1160372094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3032050673107728044, guid: cf42d3d9d31245345a0f771c06788d0d, type: 3}
@@ -1120,7 +1145,7 @@ PrefabInstance:
     - target: {fileID: -6199696995164831811, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e54e643fc373cb342ba6aa582d9270b6, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -5851063233388800735, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_TagString
       value: Province
@@ -1128,18 +1153,18 @@ PrefabInstance:
     - target: {fileID: -4969506558817801323, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e54e643fc373cb342ba6aa582d9270b6, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -2885667693350321590, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e54e643fc373cb342ba6aa582d9270b6, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: -2174023274212151038, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e54e643fc373cb342ba6aa582d9270b6, type: 2}
+      objectReference: {fileID: 2100000, guid: c0b1178de0aba4373ad3e788ba45f31e, type: 2}
     - target: {fileID: 919132149155446097, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_Name
-      value: northerns2
+      value: New England
       objectReference: {fileID: 0}
     - target: {fileID: 2843494344441857705, guid: 3abc6a60ec6feb548a17edd573602d57, type: 3}
       propertyPath: m_TagString
