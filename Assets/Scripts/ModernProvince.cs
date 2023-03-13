@@ -8,7 +8,7 @@ public class ModernProvince : MonoBehaviour
     public bool diplomaticRecognition = false;
     public int directIncome = 0;
     public int developement = 0;
-    public string owner = "not a formal nation";
+    public string owner = "Not a formal nation";
 
     private enum ModernInfluenceLevels : int
     {
@@ -27,6 +27,12 @@ public class ModernProvince : MonoBehaviour
         {
             
         }   
+    }
+
+    //TODO deprecate
+    public void editOwner(string newOwner)
+    {
+        owner = newOwner;
     }
     
     
