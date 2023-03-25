@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public Camera cam;
     public GameObject selected;
     private bool isSelected = false;
-    private ModernProvince selectionInfo;
+    private ModernProvince modernProvince;
 
     #endregion
 
@@ -39,11 +39,12 @@ public class Player : MonoBehaviour
 
     #endregion
     
-    #region tick time variables
+    #region tick time
 
     private int tickSpeed = 1; //1 second
 
     private DateTime gameTime = new DateTime(1444,1,1);
+    
     
     #endregion
 
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    public void claimProvince(GameObject province)
+    private void ClaimProvince(GameObject province)
     {
         playerProvinces.Add(province);
         
@@ -64,31 +65,14 @@ public class Player : MonoBehaviour
         }
 
 
-        province.GetComponent<ModernProvince>().diplomaticRecognition = true;
+        province.GetComponent<ModernProvince>().recognized = true;
         province.GetComponent<ModernProvince>().owner = "You";
-        province.GetComponent<ModernProvince>().directIncome = province.GetComponent<ModernProvince>().developement;
-
-    }    
-    
-    private void Start()
-    {
-        
-
-
-        #region tick based update loop setup
-
-        StartCoroutine("tickUpdate");
-
-        #endregion
+        province.GetComponent<ModernProvince>().taxation = province.GetComponent<ModernProvince>().developement;
 
     }
 
-    private void Update()
+    private void SelectProvince()
     {
-        #region selection manager
-
-
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -120,9 +104,42 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
 
-        #endregion
+    private void TradeDisplay()
+    {
+        //you can't trade with yourself lmao, err can you?
+        if (selected != null && modernProvince.recognized && modernProvince.owner != "You") 
+        {
+            if (!displayTrade)
+            {
+                if (GUI.Button(new Rect(400, 0, 200, 50), "Trade", button36))
+                {
+                    displayTrade = true;
+                }
+            }
 
+            if (displayTrade)
+            {
+                if (GUI.Button(new Rect(400, 0, 300, 50), "Hide Trade",button36))
+                {
+                    displayTrade = false;
+                }
+            }
+        }   
+        
+    }
+    
+    private void Start()
+    {
+        
+        StartCoroutine(nameof(TickUpdate));
+
+    }
+
+    private void Update()
+    {
+        SelectProvince();
         #region select starting province event
 
         if (startingProvince == null)
@@ -133,7 +150,7 @@ public class Player : MonoBehaviour
                 selected.GetComponent<Outline>().enabled = false; 
                 selected = null;
 
-                claimProvince(startingProvince);
+                ClaimProvince(startingProvince);
 
                 gameStage = 1; //For lore/tutorial 
                 isSelected = false; //
@@ -195,18 +212,18 @@ public class Player : MonoBehaviour
         if (isSelected)
         {
             
-            selectionInfo = selected.GetComponent<ModernProvince>();
+            modernProvince = selected.GetComponent<ModernProvince>();
             
             GUILayout.Label("Area: " + selected.name, basic36);
             
-            if (selectionInfo.owner != "You")
+            if (modernProvince.owner != "You")
             {
-                GUILayout.Label("influence: " + selectionInfo.influence, basic36);
+                GUILayout.Label("Influence: " + modernProvince.influence, basic36);
             }
-            GUILayout.Label("Owner: " + selectionInfo.owner, basic36);
-            GUILayout.Label("Recognized: " + selectionInfo.diplomaticRecognition, basic36);
-            GUILayout.Label("Income: " + selectionInfo.directIncome, basic36);
-            GUILayout.Label("Development: " + selectionInfo.developement, basic36);
+            GUILayout.Label("Owner: " + modernProvince.owner, basic36);
+            GUILayout.Label("Recognized: " + modernProvince.recognized, basic36);
+            GUILayout.Label("Taxation: " + modernProvince.taxation, basic36);
+            GUILayout.Label("Development: " + modernProvince.developement, basic36);
 
         }
         #endregion
@@ -216,40 +233,18 @@ public class Player : MonoBehaviour
         GUI.Label(new Rect(1620,60,300,60), "Money: " + playerMoney, basic36);
         #endregion
 
-        #region provinceInteraction
-        
-        if (selected != null && selectionInfo.diplomaticRecognition && selectionInfo.owner != "You")
-        {
-            if (!displayTrade)
-            {
-                if (GUI.Button(new Rect(400, 0, 200, 50), "Trade", button36))
-                {
-                    displayTrade = true;
-                }
-            }
-
-            if (displayTrade)
-            {
-                if (GUI.Button(new Rect(400, 0, 300, 50), "Hide Trade",button36))
-                {
-                    displayTrade = false;
-                }
-            }
-        }
-
-        #endregion
-
+        TradeDisplay();
     }
     
     
-    IEnumerator tickUpdate()
+    IEnumerator TickUpdate()
     {
         for (;;)
         {
             gameTime = gameTime.Add(new TimeSpan(1,0,0,0));
             foreach (GameObject province in playerProvinces)
             {
-                playerMoney += province.GetComponent<ModernProvince>().directIncome;
+                playerMoney += province.GetComponent<ModernProvince>().taxation;
             }
             
             

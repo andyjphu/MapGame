@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ModernProvince : MonoBehaviour
 {
     public int influence = 0;
-    public bool diplomaticRecognition = false;
-    public int directIncome = 0;
+    public bool recognized = false;
+    public int taxation = 0;
     public int developement = 0;
     public string owner = "Not a formal nation";
 
