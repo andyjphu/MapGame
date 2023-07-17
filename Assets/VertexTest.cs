@@ -14,19 +14,21 @@ public class VertexTest : MonoBehaviour
             h++;
             GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-            Vector3 gpos = vertex;
-            Vector3 localScale = gameObject.transform.localScale;
-            print(localScale);
-            gpos = new Vector3(
-                gpos.x * localScale.x, 
-                gpos.z * localScale.z, 
-                gpos.y * localScale.y);
+            // Vector3 gpos = vertex;
+            // Vector3 localScale = gameObject.transform.localScale;
+            // print(localScale);
+            // gpos = new Vector3(
+            //     gpos.x * localScale.x, 
+            //     gpos.y * localScale.y, 
+            //     gpos.z * localScale.z);
+            //
+            // g.transform.position = gpos;
+            //
 
-            g.transform.position = gpos;
+            g.transform.position = vertex;
             
             
-            
-            if (h > 255){
+            if (h > 204096){
                 break;
             }
         }
