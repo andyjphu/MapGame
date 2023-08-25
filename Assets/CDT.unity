@@ -160,7 +160,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 322890301}
-  - component: {fileID: 322890300}
+  - component: {fileID: 322890302}
+  - component: {fileID: 322890303}
   m_Layer: 0
   m_Name: ScriptMaster
   m_TagString: Untagged
@@ -168,25 +169,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &322890300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322890299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb36f3a224700047873420b6b26d407, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainPointCloud: {fileID: 0}
-  ConstrainedEdges: {fileID: 0}
-  TilemapBackground: {fileID: 0}
-  TilemapBlockers: {fileID: 0}
-  DrawTriangles: 1
-  VisualRepresentation: {fileID: 0}
-  TesselationMaximumTriangleArea: 0
 --- !u!4 &322890301
 Transform:
   m_ObjectHideFlags: 0
@@ -202,6 +184,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &322890302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322890299}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e5d76362774e07a23a452b4e9272a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preFlattenCollider: {fileID: 7049348763041251349}
+  DrawTriangles: 1
+  VisualRepresentation: {fileID: 0}
+  TesselationMaximumTriangleArea: 0
+--- !u!114 &322890303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322890299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346ad4abfa5134a9489e984821d6b76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigColor: {fileID: 2100000, guid: 04977f8787ea32a40b1d437c0bb0cc03, type: 2}
 --- !u!1 &1625043821
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1798215089
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -24,17 +24,18 @@ public class DTester : MonoBehaviour
 {
     [Header("Polygons")] [Tooltip("Put here the collider that contains the main point cloud.")]
     public MeshCollider preFlattenCollider;
-    private PolygonCollider2D MainPointCloud;
 
-    [Tooltip("Put here the collider that contains the polygons formed by constrained edges.")]
-    public PolygonCollider2D ConstrainedEdges;
-
-    [Header("Tilemaps")]
-    [Tooltip("Put here the collider of the tilemap that is used as background.")]
-    public CompositeCollider2D TilemapBackground;
-
-    [Tooltip("Put here the collider of the tilemap that is used as walls, ground, platforms...")]
-    public CompositeCollider2D TilemapBlockers;
+    private PolygonCollider2D MainPointCloud = new PolygonCollider2D();
+    //
+    // [Tooltip("Put here the collider that contains the polygons formed by constrained edges.")]
+    // public PolygonCollider2D ConstrainedEdges;
+    //
+    // [Header("Tilemaps")]
+    // [Tooltip("Put here the collider of the tilemap that is used as background.")]
+    // public CompositeCollider2D TilemapBackground;
+    //
+    // [Tooltip("Put here the collider of the tilemap that is used as walls, ground, platforms...")]
+    // public CompositeCollider2D TilemapBlockers;
 
     [Header("Settings")]
     [Tooltip("When enabled, the output triangle edges are displayed.")]
@@ -52,7 +53,14 @@ public class DTester : MonoBehaviour
 
     public void Start()
     {
-        preFlattenCollider.
+        int i = 0;
+        List<Vector2> points = new List<Vector2>();
+        foreach (Vector3 vert in preFlattenCollider.sharedMesh.vertices)
+        {
+            points.Add(new Vector2(vert.x, vert.y));
+            i += 1;
+        }
+        MainPointCloud.SetPath(0,points.ToArray());
     }
 
     protected void RunTestPolygonColliders()
@@ -64,10 +72,10 @@ public class DTester : MonoBehaviour
 
         List<List<Vector2>> constrainedEdgePoints = new List<List<Vector2>>();
 
-        if (ConstrainedEdges != null)
-        {
-            ExtractPointsFromCollider(ConstrainedEdges, constrainedEdgePoints);
-        }
+        // if (ConstrainedEdges != null)
+        // {
+        //     ExtractPointsFromCollider(ConstrainedEdges, constrainedEdgePoints);
+        // }
 
         m_outputTriangles.Clear();
         m_triangulation.Triangulate(pointsToTriangulate, TesselationMaximumTriangleArea, constrainedEdgePoints);
@@ -78,28 +86,28 @@ public class DTester : MonoBehaviour
         Debug.Log("Test finished.");
     }
 
-    protected void RunTestTilemapColliders()
-    {
-        Debug.Log("Running Delaunay triangulation test...");
-
-        List<Vector2> pointsToTriangulate = new List<Vector2>();
-        ExtractPointsFromCollider(TilemapBackground, pointsToTriangulate);
-
-        List<List<Vector2>> constrainedEdgePoints = new List<List<Vector2>>();
-
-        if (TilemapBlockers != null)
-        {
-            ExtractPointsFromCollider(TilemapBlockers, constrainedEdgePoints);
-        }
-
-        m_outputTriangles.Clear();
-        m_triangulation.Triangulate(pointsToTriangulate, TesselationMaximumTriangleArea, constrainedEdgePoints);
-        m_triangulation.GetTrianglesDiscardingHoles(m_outputTriangles);
-
-        VisualRepresentation.mesh = CreateMeshFromTriangles(m_outputTriangles);
-
-        Debug.Log("Test finished.");
-    }
+    // protected void RunTestTilemapColliders()
+    // {
+    //     Debug.Log("Running Delaunay triangulation test...");
+    //
+    //     List<Vector2> pointsToTriangulate = new List<Vector2>();
+    //     ExtractPointsFromCollider(TilemapBackground, pointsToTriangulate);
+    //
+    //     List<List<Vector2>> constrainedEdgePoints = new List<List<Vector2>>();
+    //
+    //     if (TilemapBlockers != null)
+    //     {
+    //         ExtractPointsFromCollider(TilemapBlockers, constrainedEdgePoints);
+    //     }
+    //
+    //     m_outputTriangles.Clear();
+    //     m_triangulation.Triangulate(pointsToTriangulate, TesselationMaximumTriangleArea, constrainedEdgePoints);
+    //     m_triangulation.GetTrianglesDiscardingHoles(m_outputTriangles);
+    //
+    //     VisualRepresentation.mesh = CreateMeshFromTriangles(m_outputTriangles);
+    //
+    //     Debug.Log("Test finished.");
+    // }
 
     private void ExtractPointsFromCollider(CompositeCollider2D collider, List<Vector2> outputPoints)
     {
@@ -188,8 +196,8 @@ public class DTester : MonoBehaviour
 
 #if UNITY_EDITOR
 
-    [UnityEditor.CustomEditor(typeof(DelaunayTriangulationTester))]
-    public class DelaunayTriangulationTesterInspector : UnityEditor.Editor
+    [UnityEditor.CustomEditor(typeof(DTester))]
+    public class DTesterInspector : UnityEditor.Editor
     {
         private int m_triangleToDraw = 0;
         private int m_pointToDraw = 0;
@@ -203,44 +211,44 @@ public class DTester : MonoBehaviour
 
             if(GUILayout.Button("Triangulate!"))
             {
-                ((DelaunayTriangulationTester)target).RunTestPolygonColliders();
+                ((DTester)target).RunTestPolygonColliders();
             }
 
-            if (GUILayout.Button("Triangulate tilemap!"))
-            {
-                ((DelaunayTriangulationTester)target).RunTestTilemapColliders();
-            }
+            // if (GUILayout.Button("Triangulate tilemap!"))
+            // {
+            //     ((DTester)target).RunTestTilemapColliders();
+            // }
 
-            if (((DelaunayTriangulationTester)target).m_triangulation == null)
+            if (((DTester)target).m_triangulation == null)
             {
                 return;
             }
 
             UnityEditor.EditorGUILayout.LabelField("Triangles", UnityEditor.EditorStyles.boldLabel);
 
-            m_triangleToDraw = UnityEditor.EditorGUILayout.IntSlider(new GUIContent("Triangle index:"), m_triangleToDraw, 0, ((DelaunayTriangulationTester)target).m_triangulation.TriangleSet.TriangleCount - 1);
+            m_triangleToDraw = UnityEditor.EditorGUILayout.IntSlider(new GUIContent("Triangle index:"), m_triangleToDraw, 0, ((DTester)target).m_triangulation.TriangleSet.TriangleCount - 1);
 
             UnityEditor.EditorGUILayout.LabelField("Triangle vertices: " + m_triangleInfo);
 
             if (GUILayout.Button(new GUIContent("Draw triangle", "Draws a green triangle according to the selected index and a red cross at the position of the first vertex.")))
             {
-                ((DelaunayTriangulationTester)target).DrawTriangle(m_triangleToDraw);
+                ((DTester)target).DrawTriangle(m_triangleToDraw);
 
                 unsafe
                 {
-                    DelaunayTriangle triangle = ((DelaunayTriangulationTester)target).m_triangulation.TriangleSet.GetTriangle(m_triangleToDraw);
+                    DelaunayTriangle triangle = ((DTester)target).m_triangulation.TriangleSet.GetTriangle(m_triangleToDraw);
                     m_triangleInfo = "(" + triangle.p[0] + ", " + triangle.p[1] + ", " + triangle.p[2] + ")";
-                    ((DelaunayTriangulationTester)target).DrawPoint(triangle.p[0]);
+                    ((DTester)target).DrawPoint(triangle.p[0]);
                 }
             }
 
             UnityEditor.EditorGUILayout.LabelField("Points", UnityEditor.EditorStyles.boldLabel);
 
-            m_pointToDraw = UnityEditor.EditorGUILayout.IntSlider(new GUIContent("Point index:"), m_pointToDraw, 0, ((DelaunayTriangulationTester)target).m_triangulation.TriangleSet.Points.Count - 1);
+            m_pointToDraw = UnityEditor.EditorGUILayout.IntSlider(new GUIContent("Point index:"), m_pointToDraw, 0, ((DTester)target).m_triangulation.TriangleSet.Points.Count - 1);
 
             if (GUILayout.Button(new GUIContent("Draw point", "Draws a red cross at the position of the point.")))
             {
-                ((DelaunayTriangulationTester)target).DrawPoint(m_pointToDraw);
+                ((DTester)target).DrawPoint(m_pointToDraw);
             }
         }
     }

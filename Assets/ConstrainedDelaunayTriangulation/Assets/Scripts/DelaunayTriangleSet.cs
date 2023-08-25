@@ -558,6 +558,17 @@ namespace Game.Utils.Triangulation
             }
         }
 
+        public override string ToString()
+        {
+            string rstring = "";
+            foreach (Vector2 point in m_points)
+            {
+                rstring += $"(X:{point.x.ToString()}, Y:{point.y.ToString()})\n";
+                
+            }
+            return rstring;
+        }
+
         public void LogDump()
         {
             for(int i = 0; i < TriangleCount; ++i)
