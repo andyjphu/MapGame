@@ -20,7 +20,7 @@ namespace AP
             Vector2[] returnList = new Vector2[vertices.Length];
             for (int i = 0; i < vertices.Length; i++)
             {
-                returnList[i] = new Vector2(vertices[i].x, vertices[i].y);
+                returnList[i] = new Vector2(vertices[i].x, vertices[i].z);
             }
 
             return returnList;
@@ -36,7 +36,7 @@ namespace AP
             Vector3[] returnList = new Vector3[vertices.Length];
             for (int i = 0; i < vertices.Length; i++)
             {
-                returnList[i] = new Vector3(vertices[i].x, vertices[i].y, 0);
+                returnList[i] = new Vector3(vertices[i].x, 0, vertices[i].y);
             }
 
             return returnList;
