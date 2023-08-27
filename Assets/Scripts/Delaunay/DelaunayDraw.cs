@@ -5,14 +5,18 @@
 //In your GameObject's Inspector, set your clickable distance and attach a cube GameObject in the appropriate fields
 
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using AP;
 
-public class PlaneRayExample : MonoBehaviour
+public class DelaunayDraw : MonoBehaviour
 {
     //Attach a cube GameObject in the Inspector before entering Play Mode
     public GameObject m_Cube;
-
-
+ 
+    public Material newBorderMaterial; 
     public GameObject m_Plane;
+    private List<GameObject> newBorder = new List<GameObject>(); // Point Cloud
 
     private RaycastHit lastHit = new RaycastHit(); 
     //Vector3 m_DistanceFromCamera;
@@ -45,12 +49,27 @@ public class PlaneRayExample : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            GameObject wayMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            wayMarker.transform.position = lastHit.point; 
             
+            GameObject wayMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wayMarker.transform.position = new Vector3(lastHit.point.x, 0, lastHit.point.z); 
+            
+               
+            newBorder.Add(wayMarker);
 
+            
         }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            DelaunayPreProcessor.CreateFlatFromCloud(newBorder.ToArray(), newBorderMaterial);
+        }
+        
+    }
+
+    void OnMouseUp()
+    {
+        
     }
 }
