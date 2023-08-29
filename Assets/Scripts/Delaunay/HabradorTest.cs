@@ -41,9 +41,16 @@ public class HabradorTest : MonoBehaviour
             new Vector3(0, 0, 0),
             new Vector3(0, 0, 1 ),
             new Vector3(1, 0, 0 ),
-            new Vector3(1, 0, 1)
+            new Vector3(1, 0, 1),
+            new Vector3(0.5f, 0, 0.5f)
+
+        };
+
+        int[] e = new int[]
+        {
+            0,1,1,4,4,3,3,2,2,4,4,0 // will generate an hour glass
         };
         
-        HabradorHelper.ConstrainedMeshFromPoints(p, mat);
+        HabradorHelper.ConstrainedMeshFromPoints(p, mat, e);
     }
 }

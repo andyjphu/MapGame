@@ -51,7 +51,7 @@ namespace AP
             return returnList;
         }
         
-        public static void CreateFlatFromMesh(Mesh mesh, Material mat)
+        public static GameObject CreateFlatFromMesh(Mesh mesh, Material mat)
         {
             GameObject newFlat = new GameObject();
                 
@@ -61,21 +61,38 @@ namespace AP
             newFlat.GetComponent<MeshFilter>().sharedMesh = mesh;
             newFlat.GetComponent<MeshRenderer>().material = mat;
 
+            return newFlat;
+
         }
 
-        public static void ConstrainedMeshFromPoints(Vector3[] vertices, Material material, int[] constrainedEdges = null)
+        public static GameObject ConstrainedMeshFromPoints(Vector3[] vertices, Material material, int[] constrainedEdges = null)
         {
-            HashSet<MyVector2> delaunayVertices = FlattenHabrador(vertices).ToHashSet();
+            MyVector2[] delaunayVerticesList = FlattenHabrador(vertices);
+            
+            List<MyVector2> hullVertices = null;
+            if (constrainedEdges != null)
+            {
+                hullVertices = new List<MyVector2>();
+                foreach (int edgePoint in constrainedEdges)
+                {
+                    hullVertices.Add(delaunayVerticesList[edgePoint]);
+                }
+            }
+            
+            
+            HashSet<MyVector2> delaunayVertices = delaunayVerticesList.ToHashSet();
 
             HalfEdgeData2 triangulated =
-                ConstrainedDelaunaySloan.GenerateTriangulation(delaunayVertices, null, null, false, new HalfEdgeData2());
+                ConstrainedDelaunaySloan.GenerateTriangulation(delaunayVertices, hullVertices, null, true, new HalfEdgeData2());
 
 
             HashSet<Triangle2> triangles = _TransformBetweenDataStructures.HalfEdge2ToTriangle2(triangulated);
 
             Mesh triangulatedMesh = _TransformBetweenDataStructures.Triangles2ToMesh(triangles, false, 0 );
             
-            CreateFlatFromMesh(triangulatedMesh, material);
+            return CreateFlatFromMesh(triangulatedMesh, material);
+            
+            
 
         }
     }

@@ -135,6 +135,7 @@ namespace Habrador_Computational_Geometry
                         else
                         {
                             currentTriangle = e3.oppositeEdge.face;
+                          
                         }
                     }
                     //If to the left, move to this triangle

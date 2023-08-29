@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using AP;
 using GK;
 
 public class DelaunayDraw : MonoBehaviour
@@ -16,8 +17,14 @@ public class DelaunayDraw : MonoBehaviour
  
     public Material newBorderMaterial; 
     public GameObject m_Plane;
-    private List<GameObject> newBorder = new List<GameObject>(); // Point Cloud
 
+    
+    private List<Vector3> newBorder = new List<Vector3>(); // Point Cloud
+    private List<GameObject> tempMarkers = new List<GameObject>();
+    private List<int> outerEdges = new List<int>();
+    private int edgeCounter = -1; 
+    
+    
     private RaycastHit lastHit = new RaycastHit(); 
     //Vector3 m_DistanceFromCamera;
 
@@ -53,19 +60,45 @@ public class DelaunayDraw : MonoBehaviour
         {
             
             GameObject wayMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            wayMarker.transform.position = new Vector3(lastHit.point.x, 0, lastHit.point.z); 
-            
-               
-            newBorder.Add(wayMarker);
+            wayMarker.transform.position = new Vector3(lastHit.point.x, 0, lastHit.point.z);
 
+            if (edgeCounter >= 0 )
+            {
+                outerEdges.Add(edgeCounter);
+                outerEdges.Add(edgeCounter + 1);
+            }
             
+            tempMarkers.Add(wayMarker);
+            newBorder.Add(wayMarker.transform.position);
+            edgeCounter += 1; 
+            
+            
+
+
+
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             //DelaunayPreProcessor.CreateFlatFromCloud(newBorder.ToArray(), newBorderMaterial);
-            
-            
+            outerEdges.Add(edgeCounter);
+            outerEdges.Add(0);
+
+            int[] oe = outerEdges.ToArray();
+            tempMarkers.Add(HabradorHelper.ConstrainedMeshFromPoints(newBorder.ToArray(), newBorderMaterial, oe));
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            newBorder.Clear();
+            foreach (GameObject w in tempMarkers)
+            {
+                Destroy(w);
+            }
+
+            edgeCounter = -1; 
+            outerEdges.Clear();
+
         }
         
     }
