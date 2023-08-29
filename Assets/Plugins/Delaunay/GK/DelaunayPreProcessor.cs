@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GK;
 
-namespace AP
+
+
+namespace GK
 {
     public class DelaunayPreProcessor
     {
@@ -81,6 +82,18 @@ namespace AP
 
             newFlat.GetComponent<MeshRenderer>().material = creationMaterial;
 
+
+        }
+
+        public static void CreateFlatFromMesh(Mesh mesh, Material mat)
+        {
+            GameObject newFlat = new GameObject();
+                
+            newFlat.AddComponent<MeshFilter>();
+            newFlat.AddComponent<MeshRenderer>();
+
+            newFlat.GetComponent<MeshFilter>().sharedMesh = mesh;
+            newFlat.GetComponent<MeshRenderer>().material = mat;
 
         }
         

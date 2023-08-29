@@ -7,7 +7,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using AP;
+using GK;
 
 public class DelaunayDraw : MonoBehaviour
 {
@@ -63,7 +63,9 @@ public class DelaunayDraw : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            DelaunayPreProcessor.CreateFlatFromCloud(newBorder.ToArray(), newBorderMaterial);
+            //DelaunayPreProcessor.CreateFlatFromCloud(newBorder.ToArray(), newBorderMaterial);
+            
+            
         }
         
     }

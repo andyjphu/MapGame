@@ -7,7 +7,8 @@ namespace Habrador_Computational_Geometry
     //From the report "An algorithm for generating constrained delaunay triangulations" by Sloan
     public static class ConstrainedDelaunaySloan
     {
-        public static HalfEdgeData2 GenerateTriangulation(HashSet<MyVector2> points, List<MyVector2> hull, HashSet<List<MyVector2>> holes, bool shouldRemoveTriangles, HalfEdgeData2 triangleData)
+        public static HalfEdgeData2 GenerateTriangulation(HashSet<MyVector2> points, List<MyVector2> hull,
+            HashSet<List<MyVector2>> holes, bool shouldRemoveTriangles, HalfEdgeData2 triangleData)
         {
             //Start by generating a delaunay triangulation with all points, including the constraints
             HashSet<MyVector2> allPoints = new HashSet<MyVector2>();
@@ -35,10 +36,10 @@ namespace Habrador_Computational_Geometry
 
             //Generate the Delaunay triangulation with some algorithm
             //timer.Start();
-            
+
             //triangleData = _Delaunay.FlippingEdges(allPoints);
             triangleData = _Delaunay.PointByPoint(allPoints, triangleData);
-            
+
             //timer.Stop();
 
             //Delaunay takes 0.003 seconds for the house so is not the bottle neck
@@ -48,17 +49,19 @@ namespace Habrador_Computational_Geometry
             //Modify the triangulation by adding the constraints to the delaunay triangulation
             triangleData = AddConstraints(triangleData, hull, shouldRemoveTriangles, timer);
 
-            foreach (List<MyVector2> hole in holes)
-            {
-                triangleData = AddConstraints(triangleData, hole, shouldRemoveTriangles, timer);
+            //Added by AP 2:00PM Aug 28 2023
+            if (holes != null){
+                foreach (List<MyVector2> hole in holes)
+                {
+                    triangleData = AddConstraints(triangleData, hole, shouldRemoveTriangles, timer);
+                }
             }
 
+        //Debug.Log(triangleData.faces.Count);
 
-            //Debug.Log(triangleData.faces.Count);
+        //Debug.Log($"Whatever time we measured it took {timer.ElapsedMilliseconds / 1000f} seconds");
 
-            //Debug.Log($"Whatever time we measured it took {timer.ElapsedMilliseconds / 1000f} seconds");
-
-            return triangleData;
+        return triangleData;
         }
 
 
