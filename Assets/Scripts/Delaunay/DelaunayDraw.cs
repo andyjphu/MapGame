@@ -1,9 +1,4 @@
-//This script detects mouse clicks on a plane using Plane.Raycast.
-//In this example, the plane is set to the Camera's x and y position, but you can set the z position so the plane is in front of your Camera.
-//The normal of the plane is set to facing forward so it is facing the Camera, but you can change this to suit your own needs.
-
-//In your GameObject's Inspector, set your clickable distance and attach a cube GameObject in the appropriate fields
-
+//EXPERIMENTAL AND BUGGY
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
