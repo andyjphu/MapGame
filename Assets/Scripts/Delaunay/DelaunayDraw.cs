@@ -46,9 +46,9 @@ public class DelaunayDraw : MonoBehaviour
             {
 
                 m_Cube.transform.position = new Vector3(
-                    Mathf.RoundToInt(hitPoint.point.x), 
+                    hitPoint.point.x - (hitPoint.point.x % 0.005f), 
                     0, 
-                    Mathf.RoundToInt(hitPoint.point.z)
+                    hitPoint.point.z - (hitPoint.point.z % 0.005f)
                     );
 
                 lastHit = hitPoint;
@@ -61,7 +61,7 @@ public class DelaunayDraw : MonoBehaviour
             
             GameObject wayMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wayMarker.transform.position = new Vector3(lastHit.point.x, 0, lastHit.point.z);
-
+            wayMarker.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             if (edgeCounter >= 0 )
             {
                 outerEdges.Add(edgeCounter);
@@ -85,6 +85,11 @@ public class DelaunayDraw : MonoBehaviour
             outerEdges.Add(0);
 
             int[] oe = outerEdges.ToArray();
+
+            if (edgeCounter < 4)
+            {
+                oe = null;
+            }
             tempMarkers.Add(HabradorHelper.ConstrainedMeshFromPoints(newBorder.ToArray(), newBorderMaterial, oe));
         }
 
