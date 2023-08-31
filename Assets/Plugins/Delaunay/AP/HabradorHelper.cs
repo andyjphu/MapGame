@@ -73,26 +73,24 @@ namespace AP
 
         }
 
-        public static GameObject ConstrainedMeshFromPoints(Vector3[] vertices, Material material, int[] constrainedEdges = null)
+        /// <summary>
+        /// Generates a Sloan-based delaunay triangulation without constrained edges
+        ///
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="material"></param>
+        /// <returns></returns>
+        public static GameObject MeshFromPoints(Vector3[] vertices, Material material)
         {
             MyVector2[] delaunayVerticesList = FlattenHabrador(vertices);
             
             List<MyVector2> hullVertices = null;
-            if (constrainedEdges != null)
-            {
-                hullVertices = new List<MyVector2>();
-                foreach (int edgePoint in constrainedEdges)
-                {
-                    hullVertices.Add(delaunayVerticesList[edgePoint]);
-                }
-            }
-            
             
             HashSet<MyVector2> delaunayVertices = delaunayVerticesList.ToHashSet();
 
             HalfEdgeData2 triangulated =
-                ConstrainedDelaunaySloan.GenerateTriangulation(delaunayVertices, hullVertices, null, true, new HalfEdgeData2());
-
+                ConstrainedDelaunaySloan.GenerateTriangulation(delaunayVertices, null, null, true, new HalfEdgeData2());
+            //TODO: if performance is an issue, replace the above with a non constrained delaunay (habrador)
 
             HashSet<Triangle2> triangles = _TransformBetweenDataStructures.HalfEdge2ToTriangle2(triangulated);
 
@@ -130,34 +128,41 @@ namespace AP
         /// <returns></returns>
         public static GameObject MaxConstrainedMeshFromPoints(Vector3[] vertices, Material material, int[] constrainedEdges)
         {
-            if (constrainedEdges == null)
-            {
-                
-            }
-            
+
             MyVector2[] delaunayVerticesList = FlattenHabrador(vertices);
-            
-            List<MyVector2> hullVertices = null;
-            if (constrainedEdges != null)
-            {
-                hullVertices = new List<MyVector2>();
-                foreach (int edgePoint in constrainedEdges)
-                {
-                    hullVertices.Add(delaunayVerticesList[edgePoint]);
-                }
-            }
-            
-            
             HashSet<MyVector2> delaunayVertices = delaunayVerticesList.ToHashSet();
+
+            int maximumTriangles = -1;
+
+            HashSet<Triangle2> triangles;
+            HashSet<Triangle2> bestTriangles; 
             
+            
+            List<MyVector2> hullVertices = new List<MyVector2>();
+            foreach (int edgePoint in constrainedEdges)
+            {
+                hullVertices.Add(delaunayVerticesList[edgePoint]);
+            }
             
             for (int j = 0; j < constrainedEdges.Length/2; j++){
                 HalfEdgeData2 triangulated =
                     ConstrainedDelaunaySloan.GenerateTriangulation(delaunayVertices, hullVertices, null, true,
                         new HalfEdgeData2());
 
+                //TODO: place for performance improvement by getting triangles from HalfEdgeData2 directly
+                triangles = _TransformBetweenDataStructures.HalfEdge2ToTriangle2(triangulated);
+                
+                if (triangles.Count > maximumTriangles)
+                {
+                    bestTriangles = triangles;
+                    maximumTriangles = triangles.Count;
+                }
 
-                HashSet<Triangle2> triangles = _TransformBetweenDataStructures.HalfEdge2ToTriangle2(triangulated);
+                hullVertices = RotateConstrainedEdges(co, 1);
+
+
+
+
             }
             
             
