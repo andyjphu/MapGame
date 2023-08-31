@@ -75,17 +75,20 @@ public class DelaunayDraw : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            //DelaunayPreProcessor.CreateFlatFromCloud(newBorder.ToArray(), newBorderMaterial);
-            outerEdges.Add(edgeCounter);
-            outerEdges.Add(0);
-
+            
             int[] oe = outerEdges.ToArray();
 
+            
+            //CDT consistently performs worse in cases with less than 4 polygons compared to normal DT
             if (edgeCounter < 4)
             {
                 oe = null;
             }
             tempMarkers.Add(HabradorHelper.ConstrainedMeshFromPoints(newBorder.ToArray(), newBorderMaterial, oe));
+            
+            int[] oe2 = HabradorHelper.RotateConstrainedEdges(outerEdges.ToArray(),1);
+            tempMarkers.Add(HabradorHelper.ConstrainedMeshFromPoints(newBorder.ToArray(), newBorderMaterial, oe2));
+
         }
 
         if (Input.GetKey(KeyCode.Space))
