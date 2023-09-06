@@ -158,14 +158,15 @@ namespace AP
                     maximumTriangles = triangles.Count;
                 }
 
-                hullVertices = RotateConstrainedEdges(constrainedEdges, 1);
+                hullVertices = RotateConstrainedEdges(co, 1);
 
 
 
 
             }
             
-//https://stackoverflow.com/questions/21122143/what-is-the-time-complexity-for-copying-list-back-to-arrays-and-vice-versa-in-ja      
+            
+            
 
             Mesh triangulatedMesh = _TransformBetweenDataStructures.Triangles2ToMesh(triangles, false, 0 );
 
